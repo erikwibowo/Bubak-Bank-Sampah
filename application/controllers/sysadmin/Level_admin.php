@@ -1,0 +1,68 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Level_admin extends CI_Controller {
+
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('MlevelAdmin');
+	}
+
+	public function index(){
+		$data['title']			= "Level Admin - Admin Luwakode";
+		$data['subtitle']		= "Level Admin";
+		$data['content']		= "level-admin";
+		$data['jumlah']			= 1;
+		$data['b1']				= $data['subtitle'];
+		$data['b1a']			= "#";
+		$data['master_data']	= "active";
+		$data['menu']			= "active";
+		$data['data']			= $this->MlevelAdmin->read()->result();
+		$this->load->view('sysadmin/index', $data);
+	}
+
+	public function data_level(){
+		$id = $this->input->post('id');
+		echo json_encode($this->MlevelAdmin->readById($id)->result());
+	}
+
+	public function create(){
+		//echo json_encode($this->input->post());
+		if ($this->MlevelAdmin->create($this->input->post())) {
+			$this->session->set_flashdata('notif', 'Level Admin berhasil disimpan');
+			$this->session->set_flashdata('type', 'success');
+		}else{
+			$this->session->set_flashdata('notif', 'Level Admin gagal disimpan');
+			$this->session->set_flashdata('type', 'error');
+		}
+		redirect('sysadmin/level-admin','refresh');
+	}
+
+	public function update(){
+		//echo json_encode($this->input->post());
+		if ($this->MlevelAdmin->update($this->input->post(), $this->input->post('id_level_admin'))) {
+			$this->session->set_flashdata('notif', 'Level Admin berhasil disimpan');
+			$this->session->set_flashdata('type', 'success');
+		}else{
+			$this->session->set_flashdata('notif', 'Level Admin gagal disimpan');
+			$this->session->set_flashdata('type', 'error');
+		}
+		redirect('sysadmin/level-admin','refresh');
+	}
+
+	public function delete($id){
+		//echo json_encode($this->input->post());
+		if ($this->MlevelAdmin->delete($id)) {
+			$this->session->set_flashdata('notif', 'Level Admin berhasil dihapus');
+			$this->session->set_flashdata('type', 'success');
+		}else{
+			$this->session->set_flashdata('notif', 'Level Admin gagal dihapus');
+			$this->session->set_flashdata('type', 'error');
+		}
+		redirect('sysadmin/level-admin','refresh');
+	}
+
+}
+
+/* End of file Level_admin.php */
+/* Location: ./application/controllers/sysadmin/Level_admin.php */
