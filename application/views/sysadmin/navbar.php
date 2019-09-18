@@ -92,12 +92,11 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="card-body box-profile">
             <div class="text-center">
-              <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>assets/admin/dist/img/avatar/avatar-blue.png" alt="User profile picture">
+              <img class="profile-user-img img-fluid img-circle" src="<?= base_url() ?>files/admin/thumb/<?= $this->session->userdata('foto_admin_thumb') ?>" alt="User profile picture">
             </div>
 
-            <p class="profile-username text-center">NAMA ADMIN</p>
-            <p class="text-muted text-center">Software Engineer</p>
-
+            <p class="profile-username text-center"><?= strtoupper($this->session->userdata('nama_admin')) ?></p>
+            <p class="text-muted text-center" style="margin-top: -8px"><?= $this->session->userdata('level_admin'); ?></p>
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
                 <b>PROJECT</b> <a class="float-right">1,322</a>
@@ -105,7 +104,7 @@
             </ul>
             <center>
               <a href="#" class="btn btn-primary"><b>Profil</b></a>
-              <a href="#" class="btn btn-danger pull-right"><b>Keluar</b></a>
+              <a href="<?= site_url('sysadmin/logout') ?>" class="btn btn-danger pull-right"><b>Keluar</b></a>
             </center>
           </div>
           <!-- /.card-body -->

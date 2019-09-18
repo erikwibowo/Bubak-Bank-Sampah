@@ -53,5 +53,9 @@ $route['default_controller'] = 'luwak';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
+//auth
+$route['sysadminlogin/auth']	= "sysadminlogin/auth";
+$route['sysadmin/logout']		= "sysadminlogin/logout";
+
 //sysadmin
 $route['sysadmin']	= "sysadmin/dashboard";

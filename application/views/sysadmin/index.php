@@ -6,10 +6,9 @@
   <title><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="<?= base_url() ?>files/lwkd-hitam.png" rel="icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/fontawesome-free/css/all.css">
-  <!-- Font Awesome Picker -->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/fontawesomepicker/css/fontawesome-iconpicker.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
@@ -114,8 +113,6 @@
 <!-- DataTables -->
 <script src="<?= base_url() ?>assets/admin/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?= base_url() ?>assets/admin/plugins/datatables/dataTables.bootstrap4.js"></script>
-<!-- Font Awesome Picker -->
-<script src="<?= base_url() ?>assets/admin/plugins/fontawesomepicker/js/fontawesome-iconpicker.js"></script>
 <!-- SweetAlert2 -->
 <script src="<?= base_url() ?>assets/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Select2 -->
@@ -163,18 +160,6 @@
       $(".datatable").DataTable();
       $('.select2').select2();
     });
-</script>
-<script>
-    /** tambah class active jika di klik */
-    var url = window.location;
-    // ini untuk menambahkan class active pada menu yg tidak memiliki anak atau single link
-    $('ul.sidebar-menu a').filter(function() {
-     return this.href == url;
-    }).parent().addClass('active');
-    // ini untuk menu beranak, jadi otomatis akan terbuka sesuai dengan link tujuan
-    $('ul.treeview-menu a').filter(function() {
-     return this.href == url;
-    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 </script>
 </body>
 </html>
