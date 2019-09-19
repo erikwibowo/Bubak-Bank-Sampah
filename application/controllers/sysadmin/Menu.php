@@ -21,8 +21,6 @@ class Menu extends CI_Controller {
 		$data['jumlah']			= 1;
 		$data['b1']				= $data['subtitle'];
 		$data['b1a']			= "#";
-		$data['master_data']	= "active";
-		$data['menu']			= "active";
 		$data['data']			= $this->Mmenu->readParent()->result();
 		$this->load->view('sysadmin/index', $data);
 	}
@@ -67,6 +65,11 @@ class Menu extends CI_Controller {
 	public function data_menu(){
 		$id_menu = $this->input->post('id');
 		echo json_encode($this->Mmenu->readById($id_menu)->result());
+	}
+
+	public function data_menu_admin(){
+		$id = $this->input->post('id');
+		echo json_encode($this->Mmenu->readByAdmin($id)->result());
 	}
 
 }

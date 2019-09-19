@@ -155,7 +155,6 @@
   </script>
 <?php } ?>
 <script type="text/javascript">
-    $('.icp-auto').iconpicker();
     $(function() {
       $(".datatable").DataTable();
       $('.select2').select2();

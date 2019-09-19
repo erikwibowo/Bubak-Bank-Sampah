@@ -548,9 +548,13 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form method="POST" action="<?= site_url('sysadmin/admin/create') ?>">
+								<form method="POST" action="<?= site_url('sysadmin/admin/create') ?>" enctype="multipart/form-data">
 									<div class="form-group">
 										<input type="text" name="nama_admin" class="form-control" autofocus required placeholder="Nama Admin">
+									</div>
+									<div class="form-group">
+										<input type="file" name="foto" class="form-control" required placeholder="Foto">
+										<p style="color: blue">Ukuran Maks. 5 MB (5000px x 5000px)</p>
 									</div>
 									<div class="form-group">
 										<input type="text" name="username_admin" class="form-control" required placeholder="Username Admin">
@@ -583,6 +587,7 @@
 	                	<thead>
 			                <tr>
 								<th>No.</th>
+								<th>FOTO</th>
 								<th>NAMA</th>
 								<th>USERNAME</th>
 								<th>LEVEL</th>
@@ -594,6 +599,9 @@
 	                		<?php $no = 1; foreach ($data as $key){ ?>
 				                <tr>
 				                	<td><?= $no++ ?></td>
+				                	<td style="text-align: center;">
+				                		<img style="width: 30px; height: 30px" src="<?= base_url() ?>files/admin/thumb/<?= $key->foto_admin_thumb ?>" class="img-circle" alt="User Image">
+				                	</td>
 									<td><?= $key->nama_admin ?></td>
 									<td><?= $key->username_admin ?></td>
 									<td><?= $key->nama_level_admin ?></td>
@@ -612,7 +620,7 @@
 										<?php }else{ ?>
 											<a href="javascript:;" class="btn btn-sm btn-warning item-aktif" data="<?= $key->id_admin ?>" row="<?= $key->nama_admin ?>"><i class="fas fa-unlock"></i></a>
 										<?php } ?>
-											<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $key->id_admin ?>" row="<?= $key->nama_admin ?>"><i class="fas fa-trash"></i></a>
+											<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $key->id_admin ?>" foto="<?= $key->foto_admin ?>" thumb="<?= $key->foto_admin_thumb ?>" row="<?= $key->nama_admin ?>"><i class="fas fa-trash"></i></a>
 										</div>
 									</td>
 				                </tr>
@@ -623,8 +631,10 @@
               			$(document).ready(function(){
               				$('.item-delete').on('click', function() {
 								var id = $(this).attr('data');
+								var foto = $(this).attr('foto');
+								var thumb = $(this).attr('thumb');
 								var data = $(this).attr('row');
-								var link = '<?= site_url('sysadmin/admin/delete/') ?>'+id;
+								var link = '<?= site_url('sysadmin/admin/delete?id=') ?>'+id+'&foto='+foto+'&thumb='+thumb;
 								$('#modal-delete').modal({backdrop: 'static', keyboard: false});
 					            $('#modal-delete').modal('show');
 					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus admin "'+data+'"?');
@@ -662,13 +672,21 @@
 					                dataType : "JSON",
 					                data : {id:id},
 					                success: function(data){
+					                	var url = "<?= base_url() ?>"+"files/admin/thumb/";
 					                	//console.log(data);
 					                	$('#modal-edit').modal({backdrop: 'static', keyboard: false});
 					                	$('#modal-edit').modal('show');
 					                	$('#nama_admin').val(data[0].nama_admin);
+					                	$('#foto_admin').val(data[0].foto_admin);
+					                	$('#foto_admin_thumb').val(data[0].foto_admin_thumb);
 					                	$('#id_admin').val(data[0].id_admin);
 					                	$('#username_admin').val(data[0].username_admin);
 					                	$('#id_level_admin').val(data[0].id_level_admin);
+					                	if (data[0].foto_admin_thumb == null) {
+					                		$('#avatar').attr('src', url+"default_thumb.png");
+					                	}else{
+					                		$('#avatar').attr('src', url+data[0].foto_admin_thumb);
+					                	}
 					                }
 					            });
 							});
@@ -709,16 +727,28 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<form method="POST" action="<?= site_url('sysadmin/admin/update') ?>">
+									<form method="POST" action="<?= site_url('sysadmin/admin/update') ?>" enctype="multipart/form-data">
+										<div class="form-group">
+											<center>
+												<img id="avatar" class="img-circle" style="width: 80px; height: 80px">
+											</center>
+										</div>
+										<div class="form-group">
+											<input type="file" name="foto" class="form-control" placeholder="Foto">
+											<p style="color: blue">Pilih foto jika akan mengubah foto<br>Ukuran Maks. 5 MB (5000px x 5000px)</p>
+										</div>
 										<div class="form-group">
 											<input type="text" id="nama_admin" name="nama_admin" class="form-control" autofocus required placeholder="Nama Admin">
 											<input type="hidden" id="id_admin" name="id_admin" class="form-control" required placeholder="ID Admin">
+											<input type="hidden" id="foto_admin" name="foto_admin" class="form-control" required placeholder="Foto Admin">
+											<input type="hidden" id="foto_admin_thumb" name="foto_admin_thumb" class="form-control" required placeholder="Foto Admin Thumb">
 										</div>
 										<div class="form-group">
 											<input type="text" id="username_admin" name="username_admin" class="form-control" required placeholder="Username Admin">
 										</div>
 										<div class="form-group">
 											<input type="password" id="password_admin" name="password_admin" class="form-control" placeholder="Password Admin">
+											<p style="color: blue">Isi password jika ingin mengubah password</p>
 										</div>
 										<div class="form-group">
 											<select class="form-control" id="id_level_admin" name="id_level_admin" style="width: 100%">
@@ -727,6 +757,268 @@
 												<?php endforeach ?>
 											</select>
 										</div>
+								</div>
+								<div class="modal-footer justify-content-between">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<button type="submit" class="btn btn-primary">Simpan</button>
+									</form>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.Modal Edit Data -->
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>
+
+<?php if ($content == "hak-akses") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="#" tooltip class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah</a>
+						<a href="#" tooltip class="btn btn-sm btn-info"><i class="fas fa-print"></i> Print</a>
+						<a href="#" tooltip class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+					</div>
+	            </div>
+	            <!-- Modal Tambah Data -->
+	            <div class="modal" id="modal-tambah">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Tambah Data</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form method="POST" action="<?= site_url('sysadmin/hak-akses/create') ?>">
+									<div class="form-group">
+										<select class="form-control" required name="id_level_admin" id="id_level_admin" style="width: 100%">
+											<option value="">-- Pilih Level Admin --</option>
+											<?php foreach ($level as $lev): ?>
+												<option value="<?= $lev->id_level_admin ?>"><?= $lev->nama_level_admin ?></option>
+											<?php endforeach ?>
+										</select>
+									</div>
+									<script type="text/javascript">
+										$(document).ready(function(){
+              								$('#id_level_admin').on('change', function() {
+              									var id = $(this).val();
+              									$.ajax({
+									                type : "POST",
+									                url  : "<?= site_url('sysadmin/menu/data-menu-admin') ?>",
+									                dataType : "JSON",
+									                data : {id:id},
+									                success: function(data){
+									                	//console.log(data);
+									                	var html = '<option value="">-- Pilih Menu --</option>';
+									                	for (var i = 0; i <= data.length; i++) {
+									                		html += '<option value="'+data[i].id_menu+'">'+data[i].nama_menu+'</option>';
+									                		$('#id_menu').html(html);
+									                	}
+									                }
+									            });
+              								});
+              							});
+									</script>
+									<div class="form-group">
+										<select class="form-control" required name="id_menu" id="id_menu" style="width: 100%">
+											<option>-- Pilih Menu --</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>HAK AKSES</label>
+									</div>
+									<div class="form-check" style="margin-top: -20px">
+					                    <input type="checkbox" name="c" value="1" id="c" class="form-check-input" id="c">
+					                    <label class="form-check-label" for="c">CREATE</label>
+					                </div>
+									<div class="form-check">
+					                    <input type="checkbox" name="r" value="1" id="r" class="form-check-input" id="r">
+					                    <label class="form-check-label" for="r">READ</label>
+					                </div>
+									<div class="form-check">
+					                    <input type="checkbox" name="u" value="1" id="u" class="form-check-input" id="u">
+					                    <label class="form-check-label" for="u">UPDATE</label>
+					                </div>
+									<div class="form-check">
+					                    <input type="checkbox" name="d" value="1" id="d" class="form-check-input" id="d">
+					                    <label class="form-check-label" for="d">DELETE</label>
+					                </div>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+								<button type="submit" class="btn btn-primary">Simpan</button>
+								</form>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.Modal Tambah Data -->
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>LEVEL</th>
+								<th>MENU</th>
+								<th>C</th>
+								<th>R</th>
+								<th>U</th>
+								<th>D</th>
+								<th>AKSI</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+	                		<?php $no = 1; foreach ($data as $key){ ?>
+				                <tr>
+				                	<td><?= $key->nama_level_admin ?></td>
+									<td><?= $key->nama_menu ?></td>
+									<td><?= $key->c ? '<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' ?></td>
+									<td><?= $key->r ? '<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' ?></td>
+									<td><?= $key->u ? '<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' ?></td>
+									<td><?= $key->d ? '<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' ?></td>
+									<td>
+										<div class="btn-group pull-right">
+											<a href="javascript:;" class="btn btn-sm btn-info item-edit" data="<?= $key->id_hak_akses ?>"><i class="fas fa-eye"></i></a>
+											<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $key->id_hak_akses ?>" level="<?= $key->nama_level_admin ?>" menu="<?= $key->nama_menu ?>"><i class="fas fa-trash"></i></a>
+										</div>
+									</td>
+				                </tr>
+	                		<?php } ?>
+	                	</tbody>
+              		</table>
+              		<script type="text/javascript">
+              			$(document).ready(function(){
+              				$('.item-delete').on('click', function() {
+								var id = $(this).attr('data');
+								var level = $(this).attr('level');
+								var menu = $(this).attr('menu');
+								var link = '<?= site_url('sysadmin/hak-akses/delete/') ?>'+id;
+								$('#modal-delete').modal({backdrop: 'static', keyboard: false});
+					            $('#modal-delete').modal('show');
+					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus hak akses "'+level+'" dari "'+menu+'"?');
+					            $('#link-delete').attr('href', link);
+							});
+
+							$('.item-edit').on('click', function() {
+								var id = $(this).attr('data');
+								$.ajax({
+					                type : "POST",
+					                url  : "<?= site_url('sysadmin/level-admin/data-level') ?>",
+					                dataType : "JSON",
+					                data : {id:id},
+					                success: function(data){
+					                	//console.log(data);
+					                	$('#modal-edit').modal({backdrop: 'static', keyboard: false});
+					                	$('#modal-edit').modal('show');
+					                	$('#nama_level_admin').val(data[0].nama_level_admin);
+					                	$('#id_level_admin').val(data[0].id_level_admin);
+					                }
+					            });
+							});
+						});
+              		</script>
+              		<!-- Modal Hapus Data -->
+		            <div class="modal" id="modal-delete">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Hapus Data</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body delete">
+								</div>
+								<div class="modal-footer justify-content-between">
+									<button type="button" class="btn btn-info" data-dismiss="modal">Batal</button>
+									<a href="" id="link-delete" class="btn btn-danger">Hapus</a>
+									</form>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.Modal Hapus Data -->
+              		<!-- Modal Edit Data -->
+		            <div class="modal" id="modal-edit">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Edit Data</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form method="POST" action="<?= site_url('sysadmin/hak-akses/update') ?>">
+										<div class="form-group">
+											<select class="form-control select2" name="id_level_admin" id="id_level_admin" style="width: 100%">
+												<option>-- Pilih Level Admin --</option>
+												<?php foreach ($level as $lev): ?>
+													<option value="<?= $lev->id_level_admin ?>"><?= $lev->nama_level_admin ?></option>
+												<?php endforeach ?>
+											</select>
+										</div>
+										<script type="text/javascript">
+											$(document).ready(function(){
+	              								$('#id_level_admin').on('change', function() {
+	              									var id = $(this).val();
+	              									$.ajax({
+										                type : "POST",
+										                url  : "<?= site_url('sysadmin/menu/data-menu-admin') ?>",
+										                dataType : "JSON",
+										                data : {id:id},
+										                success: function(data){
+										                	//console.log(data);
+										                	var html = '';
+										                	for (var i = 0; i <= data.length; i++) {
+										                		html += '<option value="'+data[i].id_menu+'">'+data[i].nama_menu+'</option>';
+										                		$('#id_menu').html(html);
+										                	}
+										                }
+										            });
+	              								});
+	              							});
+										</script>
+										<div class="form-group">
+											<select class="form-control select2" name="id_menu" id="id_menu" style="width: 100%">
+												<option>-- Pilih Menu --</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label>HAK AKSES</label>
+										</div>
+										<div class="form-check" style="margin-top: -20px">
+						                    <input type="checkbox" name="c" value="1" id="c" class="form-check-input" id="c">
+						                    <label class="form-check-label" for="c">CREATE</label>
+						                </div>
+										<div class="form-check">
+						                    <input type="checkbox" name="r" value="1" id="r" class="form-check-input" id="r">
+						                    <label class="form-check-label" for="r">READ</label>
+						                </div>
+										<div class="form-check">
+						                    <input type="checkbox" name="u" value="1" id="u" class="form-check-input" id="u">
+						                    <label class="form-check-label" for="u">UPDATE</label>
+						                </div>
+										<div class="form-check">
+						                    <input type="checkbox" name="d" value="1" id="d" class="form-check-input" id="d">
+						                    <label class="form-check-label" for="d">DELETE</label>
+						                </div>
 								</div>
 								<div class="modal-footer justify-content-between">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>

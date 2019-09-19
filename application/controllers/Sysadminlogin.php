@@ -10,6 +10,11 @@ class Sysadminlogin extends CI_Controller {
 	}
 
 	public function index(){
+		if ($this->session->userdata('login') == "berhasil") {
+			$this->session->set_flashdata('notif', 'Selamat datang kembali');
+			$this->session->set_flashdata('type', 'success');
+			redirect('sysadmin','refresh');
+		}
 		$data['title'] = "Login Admin Luwakode";
 		$this->load->view('login', $data);
 	}
@@ -40,6 +45,7 @@ class Sysadminlogin extends CI_Controller {
 								'nama_admin'		=> $key->nama_admin,
 								'foto_admin'		=> $key->foto_admin,
 								'foto_admin_thumb'	=> $key->foto_admin_thumb,
+								'id_level_admin'	=> $key->id_level_admin,
 								'level_admin'		=> $key->nama_level_admin,
 								'login'				=> "berhasil"
 							);

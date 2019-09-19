@@ -3,7 +3,7 @@
   <a href="<?= base_url() ?>assets/admin/index3.html" class="brand-link">
     <img src="<?= base_url() ?>files/lwkd-putih.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-light">LUWAKODE</span>
+    <span class="brand-text font-weight-bold">LUWAKODE</span>
   </a>
 
   <!-- Sidebar -->
@@ -41,16 +41,16 @@
             <p>Form</p>
           </a>
         </li> -->
-        <?php foreach ($this->Mmenu->readParent()->result() as $key){
+        <?php foreach ($this->Mmenu->readParentHakAkses($this->session->userdata('id_level_admin'))->result() as $key){
           if ($key->type_menu == "S") { ?>
             <li class="nav-item">
-              <a href="<?= site_url('sysadmin/'.$key->url_menu) ?>" class="nav-link">
+              <a href="<?= site_url('sysadmin/'.$key->url_menu) ?>" class="nav-link <?= $this->uri->segment(2) == $key->url_menu ? 'active':'' ?>">
                 <i class="nav-icon <?= $key->icon_menu ?>"></i>
                 <p><?= $key->nama_menu ?></p>
               </a>
             </li>
         <?php }else{ ?>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview-<?= $key->url_menu ?> <?= $this->uri->segment(3) == $key->url_menu ? 'menu-open':'' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fas <?= $key->icon_menu ?>"></i>
               <p>
@@ -60,9 +60,17 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <?php foreach ($this->Mmenu->readChild($key->id_menu)->result() as $sub): ?>
+              <?php foreach ($this->Mmenu->readChildHakAkses($this->session->userdata('id_level_admin'), $key->id_menu)->result() as $sub): ?>
                 <li class="nav-item">
-                  <a href="<?= site_url('sysadmin/'.$sub->url_menu) ?>" class="nav-link">
+                  <?php if ($this->uri->segment(2) == $sub->url_menu){
+                    $active = "active"; ?>
+                    <script type="text/javascript">
+                      $('.has-treeview-<?= $key->url_menu ?>').addClass('menu-open');
+                    </script>
+                  <?php }else{
+                    $active = ""; ?>
+                  <?php } ?>
+                  <a href="<?= site_url('sysadmin/'.$sub->url_menu) ?>" class="nav-link <?= $active ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p><?= $sub->nama_menu ?></p>
                   </a>

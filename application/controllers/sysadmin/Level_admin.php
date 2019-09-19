@@ -21,8 +21,6 @@ class Level_admin extends CI_Controller {
 		$data['jumlah']			= 1;
 		$data['b1']				= $data['subtitle'];
 		$data['b1a']			= "#";
-		$data['master_data']	= "active";
-		$data['menu']			= "active";
 		$data['data']			= $this->MlevelAdmin->read()->result();
 		$this->load->view('sysadmin/index', $data);
 	}

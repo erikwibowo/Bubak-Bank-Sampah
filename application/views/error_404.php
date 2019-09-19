@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Opps! 403 Forbidden</title>
+	<title>Opps! 404 Not Found</title>
+	<link href="<?= base_url() ?>files/lwkd-hitam.png" rel="icon">
 	<style type="text/css">
 		*{
 		    transition: all 0.6s;
@@ -45,7 +46,7 @@
 <body>
 	<div id="main">
     	<div class="fof">
-        		<h1>403 : Anda seharusnya tidak disini</h1>
+        		<h1>404 : Sepertinya anda tersesat</h1>
     	</div>
 	</div>
 </body>

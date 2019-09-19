@@ -8,4 +8,8 @@
 	$this->load->view('sysadmin/tabel');
 }elseif ($content == "admin") {
 	$this->load->view('sysadmin/tabel');
+}elseif ($content == "hak-akses") {
+	$this->load->view('sysadmin/tabel');
+}elseif ($content == "profil") {
+	$this->load->view('sysadmin/profil');
 } ?>
