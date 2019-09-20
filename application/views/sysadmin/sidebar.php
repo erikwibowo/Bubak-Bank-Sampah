@@ -56,7 +56,7 @@
               <p>
                 <?= $key->nama_menu ?>
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right"><?= $this->Mmenu->readChild($key->id_menu)->num_rows() ?></span>
+                <!-- <span class="badge badge-info right"><?= $this->Mmenu->readChild($key->id_menu)->num_rows() ?></span> -->
               </p>
             </a>
             <ul class="nav nav-treeview">

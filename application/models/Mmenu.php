@@ -32,6 +32,7 @@ class Mmenu extends CI_Model {
 		$this->db->join('hak_akses b', 'a.id_menu = b.id_menu');
 		$this->db->where_in('a.type_menu', $type_menu);
 		$this->db->where('b.id_level_admin', $id_level_admin);
+		$this->db->where('b.r', 1);
 		$this->db->order_by('a.nama_menu', 'asc');
 		return $this->db->get('menu a');
 	}
@@ -48,6 +49,7 @@ class Mmenu extends CI_Model {
 		$this->db->where('a.type_menu', 'C');
 		$this->db->where('a.parent', $parent);
 		$this->db->where('b.id_level_admin', $id_level_admin);
+		$this->db->where('b.r', 1);
 		$this->db->order_by('a.nama_menu', 'asc');
 		return $this->db->get('menu a');
 	}

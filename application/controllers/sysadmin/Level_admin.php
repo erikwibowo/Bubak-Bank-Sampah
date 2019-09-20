@@ -15,6 +15,7 @@ class Level_admin extends CI_Controller {
 	}
 
 	public function index(){
+		akses($this->session->userdata('id_level_admin'), 'level-admin', 'r');
 		$data['title']			= "Level Admin - Admin Luwakode";
 		$data['subtitle']		= "Level Admin";
 		$data['content']		= "level-admin";
@@ -31,6 +32,7 @@ class Level_admin extends CI_Controller {
 	}
 
 	public function create(){
+		akses($this->session->userdata('id_level_admin'), 'level-admin', 'c');
 		//echo json_encode($this->input->post());
 		if ($this->MlevelAdmin->create($this->input->post())) {
 			$this->session->set_flashdata('notif', 'Level Admin berhasil disimpan');
@@ -43,6 +45,7 @@ class Level_admin extends CI_Controller {
 	}
 
 	public function update(){
+		akses($this->session->userdata('id_level_admin'), 'level-admin', 'u');
 		//echo json_encode($this->input->post());
 		if ($this->MlevelAdmin->update($this->input->post(), $this->input->post('id_level_admin'))) {
 			$this->session->set_flashdata('notif', 'Level Admin berhasil disimpan');
@@ -55,6 +58,7 @@ class Level_admin extends CI_Controller {
 	}
 
 	public function delete($id){
+		akses($this->session->userdata('id_level_admin'), 'level-admin', 'd');
 		//echo json_encode($this->input->post());
 		if ($this->MlevelAdmin->delete($id)) {
 			$this->session->set_flashdata('notif', 'Level Admin berhasil dihapus');

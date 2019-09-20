@@ -50,6 +50,8 @@ class Sysadminlogin extends CI_Controller {
 								'login'				=> "berhasil"
 							);
 							$this->session->set_userdata($data_session);
+							$this->session->set_flashdata('notif', 'Selamat datang '.$key->nama_admin.' :)');
+							$this->session->set_flashdata('type', 'info');
 							redirect('sysadmin','refresh');
 						}
 					}else{

@@ -16,6 +16,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function index(){
+		akses($this->session->userdata('id_level_admin'), 'admin', 'r');
 		$data['title']			= "Admin - Admin Luwakode";
 		$data['subtitle']		= "Admin";
 		$data['content']		= "admin";
@@ -33,7 +34,8 @@ class Admin extends CI_Controller {
 	}
 
 	public function create(){
-		//echo json_encode($_FILES); die();
+		akses($this->session->userdata('id_level_admin'), 'admin', 'c');
+		//echo json_encode($_FILES);
 		$nm_file = "admin_".time(); //nama file + fungsi time
         $config['upload_path'] = './files/admin/source/'; //folder untuk meyimpan foto
         $config['allowed_types'] = 'jpg|png|jpeg';
@@ -45,7 +47,7 @@ class Admin extends CI_Controller {
 
         if(isset($_FILES['foto']['name'])){
             if($this->upload->do_upload('foto')){
-        		//echo "Foto ada"; die();
+        		//echo "Foto ada";
                 $data_upload = $this->upload->data();
                 $create_thumb = array(
                     'image_library' => 'gd2',
@@ -70,7 +72,7 @@ class Admin extends CI_Controller {
 					'id_level_admin'	=> $this->input->post('id_level_admin')
 				);
             }else{
-        		//echo "Foto tidak ada"; die();
+        		//echo "Foto tidak ada";
                 $data = array(
 					'nama_admin'	=> $this->input->post('nama_admin'),
 					'username_admin'	=> $this->input->post('username_admin'),
@@ -90,8 +92,9 @@ class Admin extends CI_Controller {
 	}
 
 	public function update(){
+		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
 		//echo json_encode($this->input->post());
-		//echo json_encode($_FILES); die();
+		//echo json_encode($_FILES);
 		$nm_file = "admin_".time(); //nama file + fungsi time
         $config['upload_path'] = './files/admin/source/'; //folder untuk meyimpan foto
         $config['allowed_types'] = 'jpg|png|jpeg';
@@ -103,7 +106,7 @@ class Admin extends CI_Controller {
 
         if(isset($_FILES['foto']['name'])){
             if($this->upload->do_upload('foto')){
-        		//echo "Foto ada"; die();
+        		//echo "Foto ada";
                 $data_upload = $this->upload->data();
                 $create_thumb = array(
                     'image_library' => 'gd2',
@@ -150,7 +153,7 @@ class Admin extends CI_Controller {
 				}
 
             }else{
-        		//echo "Foto tidak ada"; die();
+        		//echo "Foto tidak ada";
                 if (empty($this->input->post('password_admin'))) {
 					$data = array(
 						'nama_admin'		=> $this->input->post('nama_admin'),
@@ -181,6 +184,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function aktifkan($id){
+		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
 		//echo json_encode($this->input->post());
 		$data = array(
 			'aktif'	=> 1
@@ -196,6 +200,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function nonaktifkan($id){
+		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
 		//echo json_encode($this->input->post());
 		$data = array(
 			'aktif'	=> 0
@@ -211,6 +216,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function delete(){
+		akses($this->session->userdata('id_level_admin'), 'admin', 'd');
 		//echo json_encode($this->input->post());
 		$id = $this->input->get('id');
 		$foto = $this->input->get('foto');

@@ -12,4 +12,5 @@
 	$this->load->view('sysadmin/tabel');
 }elseif ($content == "profil") {
 	$this->load->view('sysadmin/profil');
-} ?>
+}
+else if($content == 'blog') {$this->load->view('sysadmin/tabel'); }

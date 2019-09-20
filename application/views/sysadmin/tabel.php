@@ -246,7 +246,6 @@
 					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus menu "'+data+'"? Jika menu memiliki child akan terhapus juga.');
 					            $('#link-delete').attr('href', link);
 							});
-
 							$('.item-edit').on('click', function() {
 								var id = $(this).attr('data');
 								$.ajax({
@@ -445,7 +444,6 @@
 					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus level admin "'+data+'"?');
 					            $('#link-delete').attr('href', link);
 							});
-
 							$('.item-edit').on('click', function() {
 								var id = $(this).attr('data');
 								$.ajax({
@@ -641,7 +639,6 @@
 					            $('.modal-title.delete').text('Hapus Data');
 					            $('#link-delete').attr('href', link);
 							});
-
               				$('.item-nonaktif').on('click', function() {
 								var id = $(this).attr('data');
 								var data = $(this).attr('row');
@@ -652,7 +649,6 @@
 					            $('.modal-title.delete').text('Nonaktifkan Admin');
 					            $('#link-delete').attr('href', link);
 							});
-
               				$('.item-aktif').on('click', function() {
 								var id = $(this).attr('data');
 								var data = $(this).attr('row');
@@ -663,7 +659,6 @@
 					            $('.modal-title.delete').text('Aktifkan Admin');
 					            $('#link-delete').attr('href', link);
 							});
-
 							$('.item-edit').on('click', function() {
 								var id = $(this).attr('data');
 								$.ajax({
@@ -840,19 +835,19 @@
 										<label>HAK AKSES</label>
 									</div>
 									<div class="form-check" style="margin-top: -20px">
-					                    <input type="checkbox" name="c" value="1" id="c" class="form-check-input" id="c">
+					                    <input type="checkbox" name="c" value="1" class="form-check-input">
 					                    <label class="form-check-label" for="c">CREATE</label>
 					                </div>
 									<div class="form-check">
-					                    <input type="checkbox" name="r" value="1" id="r" class="form-check-input" id="r">
+					                    <input type="checkbox" name="r" value="1" class="form-check-input">
 					                    <label class="form-check-label" for="r">READ</label>
 					                </div>
 									<div class="form-check">
-					                    <input type="checkbox" name="u" value="1" id="u" class="form-check-input" id="u">
+					                    <input type="checkbox" name="u" value="1" class="form-check-input">
 					                    <label class="form-check-label" for="u">UPDATE</label>
 					                </div>
 									<div class="form-check">
-					                    <input type="checkbox" name="d" value="1" id="d" class="form-check-input" id="d">
+					                    <input type="checkbox" name="d" value="1" class="form-check-input">
 					                    <label class="form-check-label" for="d">DELETE</label>
 					                </div>
 							</div>
@@ -912,20 +907,39 @@
 					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus hak akses "'+level+'" dari "'+menu+'"?');
 					            $('#link-delete').attr('href', link);
 							});
-
 							$('.item-edit').on('click', function() {
 								var id = $(this).attr('data');
 								$.ajax({
 					                type : "POST",
-					                url  : "<?= site_url('sysadmin/level-admin/data-level') ?>",
+					                url  : "<?= site_url('sysadmin/hak-akses/data-hak-akses') ?>",
 					                dataType : "JSON",
 					                data : {id:id},
 					                success: function(data){
 					                	//console.log(data);
 					                	$('#modal-edit').modal({backdrop: 'static', keyboard: false});
 					                	$('#modal-edit').modal('show');
-					                	$('#nama_level_admin').val(data[0].nama_level_admin);
-					                	$('#id_level_admin').val(data[0].id_level_admin);
+					                	$('#labeladmin').html(data[0].nama_level_admin+" > "+data[0].nama_menu);
+					                	$('#id_hak_akses').val(data[0].id_hak_akses);
+					                	if (data[0].c == 1) {
+					                		$('#c').prop("checked", true);
+					                	}else{
+					                		$('#c').prop("checked", false);
+					                	}
+					                	if (data[0].r == 1) {
+					                		$('#r').prop("checked", true);
+					                	}else{
+					                		$('#r').prop("checked", false);
+					                	}
+					                	if (data[0].u == 1) {
+					                		$('#u').prop("checked", true);
+					                	}else{
+					                		$('#u').prop("checked", false);
+					                	}
+					                	if (data[0].d == 1) {
+					                		$('#d').prop("checked", true);
+					                	}else{
+					                		$('#d').prop("checked", false);
+					                	}
 					                }
 					            });
 							});
@@ -967,56 +981,26 @@
 								<div class="modal-body">
 									<form method="POST" action="<?= site_url('sysadmin/hak-akses/update') ?>">
 										<div class="form-group">
-											<select class="form-control select2" name="id_level_admin" id="id_level_admin" style="width: 100%">
-												<option>-- Pilih Level Admin --</option>
-												<?php foreach ($level as $lev): ?>
-													<option value="<?= $lev->id_level_admin ?>"><?= $lev->nama_level_admin ?></option>
-												<?php endforeach ?>
-											</select>
+											<label id="labeladmin">LEVEL ADMIN > HAK AKSES</label>
+											<input type="hidden" name="id_hak_akses" id="id_hak_akses">
 										</div>
-										<script type="text/javascript">
-											$(document).ready(function(){
-	              								$('#id_level_admin').on('change', function() {
-	              									var id = $(this).val();
-	              									$.ajax({
-										                type : "POST",
-										                url  : "<?= site_url('sysadmin/menu/data-menu-admin') ?>",
-										                dataType : "JSON",
-										                data : {id:id},
-										                success: function(data){
-										                	//console.log(data);
-										                	var html = '';
-										                	for (var i = 0; i <= data.length; i++) {
-										                		html += '<option value="'+data[i].id_menu+'">'+data[i].nama_menu+'</option>';
-										                		$('#id_menu').html(html);
-										                	}
-										                }
-										            });
-	              								});
-	              							});
-										</script>
-										<div class="form-group">
-											<select class="form-control select2" name="id_menu" id="id_menu" style="width: 100%">
-												<option>-- Pilih Menu --</option>
-											</select>
-										</div>
-										<div class="form-group">
+										<div class="form-group" style="margin-top: -20px">
 											<label>HAK AKSES</label>
 										</div>
 										<div class="form-check" style="margin-top: -20px">
-						                    <input type="checkbox" name="c" value="1" id="c" class="form-check-input" id="c">
+						                    <input type="checkbox" name="c" value="1" id="c" class="form-check-input">
 						                    <label class="form-check-label" for="c">CREATE</label>
 						                </div>
 										<div class="form-check">
-						                    <input type="checkbox" name="r" value="1" id="r" class="form-check-input" id="r">
+						                    <input type="checkbox" name="r" value="1" id="r" class="form-check-input">
 						                    <label class="form-check-label" for="r">READ</label>
 						                </div>
 										<div class="form-check">
-						                    <input type="checkbox" name="u" value="1" id="u" class="form-check-input" id="u">
+						                    <input type="checkbox" name="u" value="1" id="u" class="form-check-input">
 						                    <label class="form-check-label" for="u">UPDATE</label>
 						                </div>
 										<div class="form-check">
-						                    <input type="checkbox" name="d" value="1" id="d" class="form-check-input" id="d">
+						                    <input type="checkbox" name="d" value="1" id="d" class="form-check-input">
 						                    <label class="form-check-label" for="d">DELETE</label>
 						                </div>
 								</div>
@@ -1039,4 +1023,9 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+<?php } ?>
+
+<?php if ($content == 'blog') { ?>
+
+<h4>Silahkan edit file tabel.php di application/views/sysadmin/(di sini)</h4>
 <?php } ?>
