@@ -203,7 +203,7 @@
 									<td>
 										<div class="btn-group pull-right">
 											<a href="javascript:;" class="btn btn-sm btn-info item-edit" data="<?= $key->id_menu ?>"><i class="fas fa-eye"></i></a>
-											<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $key->id_menu ?>" row="<?= $key->nama_menu ?>"><i class="fas fa-trash"></i></a>
+											<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $key->id_menu ?>" menu="<?= $key->url_menu ?>" row="<?= $key->nama_menu ?>"><i class="fas fa-trash"></i></a>
 										</div>
 									</td>
 				                </tr>
@@ -226,7 +226,7 @@
 											<td>
 												<div class="btn-group pull-right">
 													<a href="javascript:;" class="btn btn-sm btn-info item-edit" data="<?= $sub->id_menu ?>"><i class="fas fa-eye"></i></a>
-													<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $sub->id_menu ?>" row="<?= $key->nama_menu ?>"><i class="fas fa-trash"></i></a>
+													<a href="javascript:;" class="btn btn-sm btn-danger item-delete" data="<?= $sub->id_menu ?>" menu="<?= $sub->url_menu ?>" row="<?= $key->nama_menu ?>"><i class="fas fa-trash"></i></a>
 												</div>
 											</td>
 						                </tr>
@@ -239,8 +239,9 @@
               			$(document).ready(function(){
               				$('.item-delete').on('click', function() {
 								var id = $(this).attr('data');
+								var menu = $(this).attr('menu');
 								var data = $(this).attr('row');
-								var link = '<?= site_url('sysadmin/menu/delete/') ?>'+id;
+								var link = '<?= site_url('sysadmin/menu/delete?id=') ?>'+id+'&menu='+menu;
 								$('#modal-delete').modal({backdrop: 'static', keyboard: false});
 					            $('#modal-delete').modal('show');
 					            $('.modal-body.delete').text('Apakah anda yakin akan menghapus menu "'+data+'"? Jika menu memiliki child akan terhapus juga.');
@@ -1023,9 +1024,4 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-<?php } ?>
-
-<?php if ($content == 'blog') { ?>
-
-<h4>Silahkan edit file tabel.php di application/views/sysadmin/(di sini)</h4>
 <?php } ?>

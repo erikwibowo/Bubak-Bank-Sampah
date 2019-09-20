@@ -116,10 +116,16 @@ class Menu extends CI_Controller {
 		redirect('sysadmin/menu','refresh');
 	}
 
-	public function delete($id){
+	public function delete(){
 		akses($this->session->userdata('id_level_admin'), 'menu', 'd');
+		$id = $this->input->get('id');
+		$menu = $this->input->get('menu');
+		$controller = "./application/controllers/sysadmin/".ucfirst($menu).".php";
+		$model = "./application/models/M".str_replace("-", "_", $menu).".php";
 		//echo json_encode($this->input->post());
 		if ($this->Mmenu->delete($id)) {
+			//unlink($controller);
+			//unlink($model);
 			$this->Mmenu->deleteChild($id);
 			$this->session->set_flashdata('notif', 'Menu berhasil dihapus');
 			$this->session->set_flashdata('type', 'success');
@@ -127,7 +133,7 @@ class Menu extends CI_Controller {
 			$this->session->set_flashdata('notif', 'Menu gagal dihapus');
 			$this->session->set_flashdata('type', 'error');
 		}
-		redirect('sysadmin/menu','refresh');
+		//redirect('sysadmin/menu','refresh');
 	}
 
 	public function data_menu(){
