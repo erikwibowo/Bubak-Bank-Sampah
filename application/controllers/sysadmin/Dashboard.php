@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function index(){
-		$data['title']			= "Dashboard - Admin Luwakode";
+		$data['title']			= "Dashboard - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Dashboard";
 		$data['content']		= "dashboard";
 		$data['dashboard']		= "active";
@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function tabel(){
-		$data['title']			= "Tabel - Admin Luwakode";
+		$data['title']			= "Tabel - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Tabel";
 		$data['content']		= "tabel";
 		$data['jumlah']			= 1;
@@ -34,7 +34,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function form(){
-		$data['title']			= "Form - Admin Luwakode";
+		$data['title']			= "Form - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Form";
 		$data['content']		= "form";
 		$data['jumlah']			= 1;

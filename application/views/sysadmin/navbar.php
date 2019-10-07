@@ -12,7 +12,7 @@
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
-         <a href="<?= site_url() ?>" target="_blank" class="nav-link" style="color: #7f7f7f; font-weight: bold">LUWAKODE MEDIA UTAMA</a>
+         <a href="<?= site_url() ?>" target="_blank" class="nav-link" style="color: #7f7f7f; font-weight: bold"><?= web_info('nama_lengkap_website') ?></a>
       </div>
     </form>
 

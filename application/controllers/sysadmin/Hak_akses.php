@@ -12,8 +12,8 @@ class Hak_akses extends CI_Controller {
 	}
 
 	public function index(){
-		akses($this->session->userdata('id_level_admin'), 'hak-akses', 'r');
-		$data['title']			= "Hak Akses - Admin Luwakode";
+		akses('hak-akses', 'r');
+		$data['title']			= "Hak Akses - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Hak Akses";
 		$data['content']		= "hak-akses";
 		$data['jumlah']			= 1;
@@ -26,7 +26,7 @@ class Hak_akses extends CI_Controller {
 
 	public function create(){
 		//echo json_encode($this->input->post()); die();
-		akses($this->session->userdata('id_level_admin'), 'hak-akses', 'c');
+		akses('hak-akses', 'c');
 		if ($this->Mhakakses->create($this->input->post())) {
 			$this->session->set_flashdata('notif', 'Hak akses berhasil disimpan');
 			$this->session->set_flashdata('type', 'success');
@@ -38,7 +38,7 @@ class Hak_akses extends CI_Controller {
 	}
 
 	public function delete($id){
-		akses($this->session->userdata('id_level_admin'), 'hak-akses', 'd');
+		akses('hak-akses', 'd');
 		if ($this->Mhakakses->delete($id)) {
 			$this->session->set_flashdata('notif', 'Hak akses berhasil dihapus');
 			$this->session->set_flashdata('type', 'success');
@@ -50,7 +50,7 @@ class Hak_akses extends CI_Controller {
 	}
 
 	public function update(){
-		akses($this->session->userdata('id_level_admin'), 'hak-akses', 'u');
+		akses('hak-akses', 'u');
 
 		$data = array(
 			'c'					=> $this->input->post('c') == null ? 0:$this->input->post('c'),

@@ -15,8 +15,8 @@ class Menu extends CI_Controller {
 	}
 
 	public function index(){
-		akses($this->session->userdata('id_level_admin'), 'menu', 'r');
-		$data['title']			= "Menu - Admin Luwakode";
+		akses('menu', 'r');
+		$data['title']			= "Menu - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Menu";
 		$data['content']		= "menu";
 		$data['jumlah']			= 1;
@@ -27,7 +27,7 @@ class Menu extends CI_Controller {
 	}
 
 	public function create(){
-		akses($this->session->userdata('id_level_admin'), 'menu', 'c');
+		akses('menu', 'c');
 
 		//echo json_encode($this->input->post()); die();
 		if ($this->Mmenu->create($this->input->post())) {
@@ -35,7 +35,7 @@ class Menu extends CI_Controller {
 			$nama_menu = $this->input->post('nama_menu');
 			$type_menu = $this->input->post('type_menu');
 
-			if ($type_menu != "P") {
+			/*if ($type_menu != "P") {
 				//mengubah file content
 				$content = "./application/views/sysadmin/content.php";
 				$handle_content = fopen($content, 'a') or die('Cannot open file:  '.$content);
@@ -75,8 +75,8 @@ class Menu extends CI_Controller {
 				redirect('sysadminlogin','refresh');
 				}"."\n}"
 				."public function index(){
-				akses("."$"."this->session->userdata('id_level_admin'), '".$menu."', 'r');
-				"."$"."data['title']			= 'Data ".ucfirst(strtolower($nama_menu))." - Admin Luwakode';
+				akses(".$menu."', 'r');
+				"."$"."data['title']			= 'Data ".ucfirst(strtolower($nama_menu))." - Admin '.web_info('nama_website');
 				"."$"."data['subtitle']		= 'Data ".ucfirst(strtolower($nama_menu))."';
 				"."$"."data['content']		= '".$menu."';
 				"."$"."data['jumlah']			= 1;
@@ -92,7 +92,7 @@ class Menu extends CI_Controller {
 				$handle_view = fopen($view_tabel, 'a') or die('Cannot open file:  '.$view_tabel);
 				$data_view = "\n\n"."<?php if ("."$"."content == '".$menu."') { ?>"."\n\n"."<h4>Silahkan edit file tabel.php di application/views/sysadmin/(di sini)</h4>"."\n\n<?php } ?>";
 				fwrite($handle_view, $data_view);
-			}
+			}*/
 
 			$this->session->set_flashdata('notif', 'Menu berhasil disimpan');
 			$this->session->set_flashdata('type', 'success');
@@ -104,7 +104,7 @@ class Menu extends CI_Controller {
 	}
 
 	public function update(){
-		akses($this->session->userdata('id_level_admin'), 'menu', 'u');
+		akses('menu', 'u');
 		//echo json_encode($this->input->post());
 		if ($this->Mmenu->update($this->input->post(), $this->input->post('id_menu'))) {
 			$this->session->set_flashdata('notif', 'Menu berhasil disimpan');
@@ -117,7 +117,7 @@ class Menu extends CI_Controller {
 	}
 
 	public function delete(){
-		akses($this->session->userdata('id_level_admin'), 'menu', 'd');
+		akses('menu', 'd');
 		$id = $this->input->get('id');
 		$menu = $this->input->get('menu');
 		$controller = "./application/controllers/sysadmin/".ucfirst($menu).".php";
@@ -133,7 +133,7 @@ class Menu extends CI_Controller {
 			$this->session->set_flashdata('notif', 'Menu gagal dihapus');
 			$this->session->set_flashdata('type', 'error');
 		}
-		//redirect('sysadmin/menu','refresh');
+		redirect('sysadmin/menu','refresh');
 	}
 
 	public function data_menu(){

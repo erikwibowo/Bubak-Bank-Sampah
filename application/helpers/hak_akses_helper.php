@@ -1,9 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 if ( ! function_exists('akses')){
-	function akses($level, $menu, $akses){
+	function akses($menu, $akses){
 		$ci =& get_instance();
 		$ci->load->model('Mhakakses');
+		$level = $ci->session->userdata('id_level_admin');
 
 		$data_hak_akses = $ci->Mhakakses->readAkses($level, $menu);
 		//print_r($data_hak_akses->result());

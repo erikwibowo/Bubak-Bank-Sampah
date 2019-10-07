@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Profil extends CI_Controller {
 
 	public function index(){
-		$data['title']			= "Profil - Admin Luwakode";
+		$data['title']			= "Profil - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Profil";
 		$data['content']		= "profil";
 		$data['jumlah']			= 1;

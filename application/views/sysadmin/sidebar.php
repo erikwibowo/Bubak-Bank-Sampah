@@ -1,9 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="<?= base_url() ?>assets/admin/index3.html" class="brand-link">
-    <img src="<?= base_url() ?>files/lwkd-putih.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <img src="<?= base_url() ?>files/<?= web_info('logo_website') ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
          style="opacity: .8">
-    <span class="brand-text font-weight-bold">LUWAKODE</span>
+    <span class="brand-text font-weight-bold"><?= web_info('nama_website') ?></span>
   </a>
 
   <!-- Sidebar -->

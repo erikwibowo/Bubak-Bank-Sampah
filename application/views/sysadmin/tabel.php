@@ -1025,3 +1025,292 @@
     </div>
     <!-- /.row -->
 <?php } ?>
+
+<?php if ($content == "jenis-sampah") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="#" tooltip class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i> Tambah</a>
+					</div>
+	            </div>
+	            <!-- Modal Tambah Data -->
+	            <div class="modal" id="modal-default">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Tambah Data</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form method="POST" action="<?= site_url('sysadmin/jenis-sampah/create') ?>" role="form">
+									<div class="form-group">
+										<label>Nama Jenis Sampah</label>
+										<input type="text" class="form-control" name="nama_jenis_sampah" placeholder="Nama Jenis Sampah">
+									</div>
+									<div class="form-group">
+										<label>Harga Per Kilo</label>
+										<input type="text" class="form-control" name="harga_per_kilo" placeholder="Harga Per Kilo">
+									</div>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+								<button type="submit" class="btn btn-primary">Simpan</button>
+								</form>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.Modal Tambah Data -->
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table datatable table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>No.</th>
+								<th>Jenis Sampah</th>
+								<th>Harga/Kg</th>
+								<th>Aksi</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+			                <?php $no = 1; foreach ($data as $key): ?>
+			                <tr>
+								<td><?= $no++ ?></td>
+								<td><?= $key->nama_jenis_sampah ?></td>
+								<td style="text-align: right"><?= rp($key->harga_per_kilo) ?></td>
+								<td>
+									<div class="btn-group pull-right">
+										<a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-<?= $key->id_jenis_sampah ?>"><i class="fa fa-eye"></i></a>
+										<a href="<?= site_url('sysadmin/jenis-sampah/delete/'.$key->id_jenis_sampah) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+									</div>
+								</td>
+			                </tr>
+			                <!-- Modal Edit Data -->
+				            <div class="modal" id="modal-edit-<?= $key->id_jenis_sampah ?>">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Edit Data</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form method="POST" action="<?= site_url('sysadmin/jenis-sampah/update') ?>" role="form">
+												<div class="form-group">
+													<label>Nama Jenis Sampah</label>
+													<input type="text" value="<?= $key->nama_jenis_sampah ?>" class="form-control" name="nama_jenis_sampah" placeholder="Nama Jenis Sampah">
+												</div>
+												<div class="form-group">
+													<label>Harga Per Kilo</label>
+													<input type="text" value="<?= $key->harga_per_kilo ?>" class="form-control" name="harga_per_kilo" placeholder="Harga Per Kilo">
+													<input type="hidden" name="id_jenis_sampah" value="<?= $key->id_jenis_sampah ?>">
+												</div>
+										</div>
+										<div class="modal-footer justify-content-between">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+											<button type="submit" class="btn btn-primary">Simpan</button>
+											</form>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<!-- /.Modal Edit Data -->
+			                <?php endforeach ?>
+	                	</tbody>
+              		</table>
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>
+
+<?php if ($content == "kategori-blog") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="#" tooltip class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i> Tambah</a>
+					</div>
+	            </div>
+	            <!-- Modal Tambah Data -->
+	            <div class="modal" id="modal-default">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Tambah Data</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form method="POST" action="<?= site_url('sysadmin/kategori-blog/create') ?>" role="form">
+									<div class="form-group">
+										<label>Kategori Blog</label>
+										<input type="text" class="form-control" name="kategori_blog" placeholder="Kategori Blog">
+									</div>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+								<button type="submit" class="btn btn-primary">Simpan</button>
+								</form>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.Modal Tambah Data -->
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table datatable table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>No.</th>
+								<th>Kategori Blog</th>
+								<th>Aksi</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+			                <?php $no = 1; foreach ($data as $key): ?>
+			                <tr>
+								<td><?= $no++ ?></td>
+								<td><?= $key->kategori_blog ?></td>
+								<td>
+									<div class="btn-group pull-right">
+										<a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-<?= $key->id_kategori_blog ?>"><i class="fa fa-eye"></i></a>
+										<a href="<?= site_url('sysadmin/kategori-blog/delete/'.$key->id_kategori_blog) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+									</div>
+								</td>
+			                </tr>
+			                <!-- Modal Edit Data -->
+				            <div class="modal" id="modal-edit-<?= $key->id_kategori_blog ?>">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Edit Data</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form method="POST" action="<?= site_url('sysadmin/kategori-blog/update') ?>" role="form">
+												<div class="form-group">
+													<label>Nama Jenis Sampah</label>
+													<input type="text" value="<?= $key->kategori_blog ?>" class="form-control" name="kategori_blog" placeholder="Nama Jenis Sampah">
+													<input type="hidden" name="id_kategori_blog" value="<?= $key->id_kategori_blog ?>">
+												</div>
+										</div>
+										<div class="modal-footer justify-content-between">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+											<button type="submit" class="btn btn-primary">Simpan</button>
+											</form>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<!-- /.Modal Edit Data -->
+			                <?php endforeach ?>
+	                	</tbody>
+              		</table>
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>
+
+<?php if ($content == "blog") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="<?= site_url('sysadmin/blog/tambah') ?>" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Tambah</a>
+					</div>
+	            </div>
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table datatable table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>No.</th>
+								<th>Foto</th>
+								<th>Kategori Blog</th>
+								<th>Judul Blog</th>
+								<th>Oleh</th>
+								<th>Publish</th>
+								<th>Aksi</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+			                <?php $no = 1; foreach ($data as $key): ?>
+			                <tr>
+								<td><?= $no++ ?></td>
+								<td><?= $key->kategori_blog ?></td>
+								<td>
+									<div class="btn-group pull-right">
+										<a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-<?= $key->id_kategori_blog ?>"><i class="fa fa-eye"></i></a>
+										<a href="<?= site_url('sysadmin/kategori-blog/delete/'.$key->id_kategori_blog) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+									</div>
+								</td>
+			                </tr>
+			                <!-- Modal Edit Data -->
+				            <div class="modal" id="modal-edit-<?= $key->id_kategori_blog ?>">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Edit Data</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form method="POST" action="<?= site_url('sysadmin/kategori-blog/update') ?>" role="form">
+												<div class="form-group">
+													<label>Nama Jenis Sampah</label>
+													<input type="text" value="<?= $key->kategori_blog ?>" class="form-control" name="kategori_blog" placeholder="Nama Jenis Sampah">
+													<input type="hidden" name="id_kategori_blog" value="<?= $key->id_kategori_blog ?>">
+												</div>
+										</div>
+										<div class="modal-footer justify-content-between">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+											<button type="submit" class="btn btn-primary">Simpan</button>
+											</form>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<!-- /.Modal Edit Data -->
+			                <?php endforeach ?>
+	                	</tbody>
+              		</table>
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>

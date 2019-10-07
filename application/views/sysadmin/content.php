@@ -12,4 +12,14 @@
 	$this->load->view('sysadmin/tabel');
 }elseif ($content == "profil") {
 	$this->load->view('sysadmin/profil');
+}else if($content == 'profil-website'){
+	$this->load->view('sysadmin/form');
+}elseif ($content == "jenis-sampah") {
+	$this->load->view('sysadmin/tabel');
+}elseif ($content == "kategori-blog") {
+	$this->load->view('sysadmin/tabel');
+}elseif ($content == "blog") {
+	$this->load->view('sysadmin/tabel');
+}elseif ($content == "tambah-blog") {
+	$this->load->view('sysadmin/form');
 }

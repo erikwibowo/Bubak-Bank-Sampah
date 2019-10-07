@@ -6,7 +6,7 @@
   <title><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="<?= base_url() ?>files/lwkd-hitam.png" rel="icon">
+  <link href="<?= base_url() ?>files/<?= web_info('logo_website') ?>" rel="icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/fontawesome-free/css/all.css">
   <!-- Ionicons -->
@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/select2/css/select2.min.css">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/summernote/summernote-bs4.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
@@ -117,6 +119,8 @@
 <script src="<?= base_url() ?>assets/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Select2 -->
 <script src="<?= base_url() ?>assets/admin/plugins/select2/js/select2.full.min.js"></script>
+<!-- Summernote -->
+<script src="<?= base_url() ?>assets/admin/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- ChartJS -->
 <script src="<?= base_url() ?>assets/admin/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -158,6 +162,11 @@
     $(function() {
       $(".datatable").DataTable();
       $('.select2').select2();
+      $('#summernote').summernote({
+        placeholder: 'Tuliskan sesuatu di dini',
+        tabsize: 2,
+        height: 400
+      });
     });
 </script>
 </body>

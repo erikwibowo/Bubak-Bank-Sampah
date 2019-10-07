@@ -16,8 +16,8 @@ class Admin extends CI_Controller {
 	}
 
 	public function index(){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'r');
-		$data['title']			= "Admin - Admin Luwakode";
+		akses('admin', 'r');
+		$data['title']			= "Admin - Admin ".web_info('nama_website');
 		$data['subtitle']		= "Admin";
 		$data['content']		= "admin";
 		$data['jumlah']			= 1;
@@ -34,7 +34,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function create(){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'c');
+		akses('admin', 'c');
 		//echo json_encode($_FILES);
 		$nm_file = "admin_".time(); //nama file + fungsi time
         $config['upload_path'] = './files/admin/source/'; //folder untuk meyimpan foto
@@ -92,7 +92,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function update(){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
+		akses('admin', 'u');
 		//echo json_encode($this->input->post());
 		//echo json_encode($_FILES);
 		$nm_file = "admin_".time(); //nama file + fungsi time
@@ -184,7 +184,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function aktifkan($id){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
+		akses('admin', 'u');
 		//echo json_encode($this->input->post());
 		$data = array(
 			'aktif'	=> 1
@@ -200,7 +200,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function nonaktifkan($id){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'u');
+		akses('admin', 'u');
 		//echo json_encode($this->input->post());
 		$data = array(
 			'aktif'	=> 0
@@ -216,7 +216,7 @@ class Admin extends CI_Controller {
 	}
 
 	public function delete(){
-		akses($this->session->userdata('id_level_admin'), 'admin', 'd');
+		akses('admin', 'd');
 		//echo json_encode($this->input->post());
 		$id = $this->input->get('id');
 		$foto = $this->input->get('foto');

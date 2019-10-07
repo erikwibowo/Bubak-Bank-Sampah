@@ -26,7 +26,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?= base_url() ?>assets/admin/index2.html"><b>Admin</b>LUWAKODE</a>
+    <a href="<?= base_url() ?>assets/admin/index2.html"><b>Admin</b><?= web_info('nama_website') ?></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

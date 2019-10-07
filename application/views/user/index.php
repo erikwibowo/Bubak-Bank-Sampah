@@ -8,7 +8,7 @@
   <meta content="Perusahaan IT" name="description">
 
   <!-- Favicons -->
-  <link href="<?= base_url() ?>files/lwkd-hitam.png" rel="icon">
+  <link href=<?= base_url() ?>files/<?= web_info('logo_website') ?>" rel="icon">
   <link href="<?= base_url() ?>assets/user/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
