@@ -3,14 +3,14 @@
     <!-- small box -->
     <div class="small-box bg-info">
       <div class="inner">
-        <h3>150</h3>
+        <h3><?= $jnasabah ?></h3>
 
-        <p>New Orders</p>
+        <p>Nasabah</p>
       </div>
       <div class="icon">
-        <i class="ion ion-bag"></i>
+        <i class="fa fa-users"></i>
       </div>
-      <a href="<?= base_url() ?>assets/admin/#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="<?= site_url('sysadmin/nasabah') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -18,14 +18,14 @@
     <!-- small box -->
     <div class="small-box bg-success">
       <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <h3><?= $jtransaksi ?></h3>
 
-        <p>Bounce Rate</p>
+        <p>Transaksi</p>
       </div>
       <div class="icon">
-        <i class="ion ion-stats-bars"></i>
+        <i class="fa fa-exchange-alt"></i>
       </div>
-      <a href="<?= base_url() ?>assets/admin/#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="<?= site_url('sysadmin/transaksi') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -33,14 +33,14 @@
     <!-- small box -->
     <div class="small-box bg-warning">
       <div class="inner">
-        <h3>44</h3>
+        <h3><?= $jdebet ?></h3>
 
-        <p>User Registrations</p>
+        <p>Debet</p>
       </div>
       <div class="icon">
-        <i class="ion ion-person-add"></i>
+        <i class="fa fa-download"></i>
       </div>
-      <a href="<?= base_url() ?>assets/admin/#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="<?= site_url('sysadmin/transaksi') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -48,14 +48,14 @@
     <!-- small box -->
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3>65</h3>
+        <h3><?= $jkredit ?></h3>
 
-        <p>Unique Visitors</p>
+        <p>Kredit</p>
       </div>
       <div class="icon">
-        <i class="ion ion-pie-graph"></i>
+        <i class="fa fa-upload"></i>
       </div>
-      <a href="<?= base_url() ?>assets/admin/#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="<?= site_url('sysadmin/transaksi') ?>" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -68,37 +68,56 @@
             <h3 class="card-title">Form Transaksi Bank Sampah</h3>
          </div>
          <div class="card-body table-responsive">
-            <form role="form">
+            <form role="form" method="post" action="<?= site_url('sysadmin/transaksi/create') ?>">
                <div class="form-group">
                   <label>Nasabah</label>
-                  <select class="form-control select2" style="width: 100%;">
-                     <option>Nama Nasabah</option>
+                  <select name="id_nasabah" class="form-control select2" style="width: 100%;">
+                     <?php foreach ($nasabah as $key): ?>
+                        <option value="<?= $key->id_nasabah ?>"><?= $key->nik_nasabah.' - '.$key->nama_nasabah ?></option>
+                     <?php endforeach ?>
                   </select>
                </div>
                <div class="form-group">
                   <label>Jenis Transaksi</label>
-                  <select class="form-control select2" style="width: 100%;">
+                  <select name="jenis_transaksi" class="form-control select2" style="width: 100%;">
                      <option value="Debet">Debet</option>
                      <option value="Kredit">Kredit</option>
                   </select>
                </div>
                <div class="form-group">
                   <label>Jenis Sampah</label>
-                  <select class="form-control select2" style="width: 100%;">
-                     <option>Jenis Sampah</option>
+                  <select name="id_jenis_sampah" id="id_jenis_sampah" class="form-control select2" style="width: 100%;">
+                     <?php foreach ($jenis_sampah as $key): ?>
+                        <option data="<?= $key->harga_per_kilo ?>" value="<?= $key->id_jenis_sampah ?>"><?= $key->nama_jenis_sampah.' - '.$key->harga_per_kilo ?></option>
+                     <?php endforeach ?>
                   </select>
                </div>
                <div class="form-group">
                   <label>Berat Sampah (Kg)</label>
-                  <input placeholder="Berat Sampah dalam Kg" class="form-control icp icp-auto" value="" type="text"/>
+                  <input required id="jumlah_sampah" name="jumlah_sampah" placeholder="Berat Sampah dalam Kg" class="form-control icp icp-auto" value="" type="text"/>
                </div>
                <div class="form-group">
                   <label>Nominal Transaksi</label>
-                  <input placeholder="Nominal Transaksi" readonly class="form-control icp icp-auto" value="" type="text"/>
+                  <input required id="nominal_transaksi" name="nominal_transaksi" placeholder="Nominal Transaksi" readonly class="form-control icp icp-auto" value="" type="text"/>
                </div>
+               <script type="text/javascript">
+                  $(document).ready(function() {
+                     $("#jumlah_sampah").on('input', function() {
+                        var harga = $('#id_jenis_sampah').find(':selected').attr('data');
+                        var berat = $('#jumlah_sampah').val();
+                        console.log(harga);
+                        hitung_nominal(harga, berat);
+                     });
+
+                     function hitung_nominal(jenis_sampah, berat) {
+                        $('#nominal_transaksi').val(jenis_sampah*berat);
+                     }
+                 });
+               </script>
                <div class="form-group">
                   <label>Deskripsi transaksi</label>
-                  <textarea placeholder="Ketikkan deskripsi transaksi di sini" class="form-control"></textarea>
+                  <textarea required name="deskripsi_transaksi" placeholder="Ketikkan deskripsi transaksi di sini" class="form-control"></textarea>
+                  <input type="hidden" name="id_admin" value="<?= $this->session->userdata('id_admin'); ?>">
                </div>
          </div>
          <div class="card-footer">

@@ -26,4 +26,6 @@
 	$this->load->view('sysadmin/form');
 }elseif ($content == "nasabah") {
 	$this->load->view('sysadmin/tabel');
+}elseif ($content == "transaksi") {
+	$this->load->view('sysadmin/tabel');
 }

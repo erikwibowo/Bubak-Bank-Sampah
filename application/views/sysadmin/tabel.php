@@ -1492,3 +1492,134 @@
     </div>
     <!-- /.row -->
 <?php } ?>
+
+<?php if ($content == "transaksi") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="#" tooltip class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i> Tambah</a>
+					</div>
+	            </div>
+	            <!-- Modal Tambah Data -->
+	            <div class="modal" id="modal-default">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Tambah Data</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form role="form" method="post" action="<?= site_url('sysadmin/transaksi/create') ?>">
+					               <div class="form-group">
+					                  <label>Nasabah</label>
+					                  <select name="id_nasabah" class="form-control select2" style="width: 100%;">
+					                     <?php foreach ($nasabah as $key): ?>
+					                        <option value="<?= $key->id_nasabah ?>"><?= $key->nik_nasabah.' - '.$key->nama_nasabah ?></option>
+					                     <?php endforeach ?>
+					                  </select>
+					               </div>
+					               <div class="form-group">
+					                  <label>Jenis Transaksi</label>
+					                  <select name="jenis_transaksi" class="form-control select2" style="width: 100%;">
+					                     <option value="Debet">Debet</option>
+					                     <option value="Kredit">Kredit</option>
+					                  </select>
+					               </div>
+					               <div class="form-group">
+					                  <label>Jenis Sampah</label>
+					                  <select name="id_jenis_sampah" id="id_jenis_sampah" class="form-control select2" style="width: 100%;">
+					                     <?php foreach ($jenis_sampah as $key): ?>
+					                        <option data="<?= $key->harga_per_kilo ?>" value="<?= $key->id_jenis_sampah ?>"><?= $key->nama_jenis_sampah.' - '.$key->harga_per_kilo ?></option>
+					                     <?php endforeach ?>
+					                  </select>
+					               </div>
+					               <div class="form-group">
+					                  <label>Berat Sampah (Kg)</label>
+					                  <input required id="jumlah_sampah" name="jumlah_sampah" placeholder="Berat Sampah dalam Kg" class="form-control icp icp-auto" value="" type="text"/>
+					               </div>
+					               <div class="form-group">
+					                  <label>Nominal Transaksi</label>
+					                  <input required id="nominal_transaksi" name="nominal_transaksi" placeholder="Nominal Transaksi" readonly class="form-control icp icp-auto" value="" type="text"/>
+					               </div>
+					               <script type="text/javascript">
+					                  $(document).ready(function() {
+					                     $("#jumlah_sampah").on('input', function() {
+					                        var harga = $('#id_jenis_sampah').find(':selected').attr('data');
+					                        var berat = $('#jumlah_sampah').val();
+					                        console.log(harga);
+					                        hitung_nominal(harga, berat);
+					                     });
+
+					                     function hitung_nominal(jenis_sampah, berat) {
+					                        $('#nominal_transaksi').val(jenis_sampah*berat);
+					                     }
+					                 });
+					               </script>
+					               <div class="form-group">
+					                  <label>Deskripsi transaksi</label>
+					                  <textarea required name="deskripsi_transaksi" placeholder="Ketikkan deskripsi transaksi di sini" class="form-control"></textarea>
+					                  <input type="hidden" name="id_admin" value="<?= $this->session->userdata('id_admin'); ?>">
+					               </div>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+								<button type="submit" class="btn btn-primary">Simpan</button>
+								</form>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.Modal Tambah Data -->
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table datatable table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>No.</th>
+								<th>NIK/Nasabah</th>
+								<th>Jenis Sampah</th>
+								<th>Jml (Kg)</th>
+								<th>Nominal Transaksi</th>
+								<th>Desc</th>
+								<th>Jenis Transaksi</th>
+								<th>Tanggal</th>
+								<th>Oleh</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+			                <?php $no = 1; foreach ($data as $key): ?>
+			                <tr>
+			                	<td><?= $no++ ?></td>
+			                	<td><?= $key->nik_nasabah."/".$key->nama_nasabah ?></td>
+			                	<td><?= $key->nama_jenis_sampah ?></td>
+			                	<td><?= $key->jumlah_sampah ?></td>
+			                	<td style="text-align: right;"><?= rp($key->nominal_transaksi) ?></td>
+			                	<td><?= $key->deskripsi_transaksi ?></td>
+			                	<td>
+			                		<?php if ($key->jenis_transaksi == "Debet"){ ?>
+			                			<button class="btn btn-sm btn-success">Debet</button>
+			                		<?php }else{ ?>
+			                			<button class="btn btn-sm btn-warning">Kredit</button>
+			                		<?php } ?>
+			                	</td>
+			                	<td><?= date_indo($key->tanggal) ?></td>
+			                	<td><?= $key->nama_admin ?></td>
+			                </tr>
+			                <?php endforeach ?>
+	                	</tbody>
+              		</table>
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>

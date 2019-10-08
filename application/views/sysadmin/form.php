@@ -29,7 +29,7 @@
 									<label>NAMA WEBSITE</label>
 				    			</div>
 				    			<div class="col-md-9">
-									<input type="text" value="<?= web_info('nama_website') ?>" id="nama" name="nama" required placeholder="NAMA WEBSITE" class="form-control">
+									<input type="text" value="<?= web_info('nama_website') ?>" id="nama_singkat" name="nama_singkat" required placeholder="NAMA WEBSITE" class="form-control">
 									<input type="hidden" value="<?= web_info('id_informasi_website') ?>" name="id_profil" id="id_profil">
 				    			</div>
 							</div>
