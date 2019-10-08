@@ -2,8 +2,9 @@
       
     if ( ! function_exists('tgl_indo'))
     {
-        function date_indo($tgl)
+        function date_indo($tgla)
         {
+            $tgl = date("Y-m-d", strtotime($tgla));
             $ubah = gmdate($tgl, time()+60*60*8);
             $pecah = explode("-",$ubah);
             $tanggal = $pecah[2];

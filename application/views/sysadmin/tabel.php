@@ -42,7 +42,7 @@
 											<option>Delaware</option>
 											<option>Tennessee</option>
 											<option>Texas</option>
-										<option>Washington</option>
+											<option>Washington</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -1258,6 +1258,7 @@
 								<th>Judul Blog</th>
 								<th>Oleh</th>
 								<th>Publish</th>
+								<th>Tanggal</th>
 								<th>Aksi</th>
 			                </tr>
 	                	</thead>
@@ -1265,17 +1266,157 @@
 			                <?php $no = 1; foreach ($data as $key): ?>
 			                <tr>
 								<td><?= $no++ ?></td>
+								<td><img src="<?= base_url() ?>files/blog/thumb/<?= $key->thumb_blog ?>"></td>
 								<td><?= $key->kategori_blog ?></td>
+								<td><?= $key->judul_blog ?></td>
+								<td><?= $key->nama_admin ?></td>
+								<td>
+									<?php if ($key->publish == 1){ ?>
+										<button class="btn btn-sm btn-success">Ya</button>
+									<?php }else{ ?>
+										<button class="btn btn-sm btn-danger">Tidak</button>
+									<?php } ?>
+								</td>
+								<td><?= date_indo($key->tanggal) ?></td>
 								<td>
 									<div class="btn-group pull-right">
-										<a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-<?= $key->id_kategori_blog ?>"><i class="fa fa-eye"></i></a>
-										<a href="<?= site_url('sysadmin/kategori-blog/delete/'.$key->id_kategori_blog) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+										<a href="<?= site_url('sysadmin/blog/edit/'.$key->id_blog) ?>" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+										<a href="<?= site_url('sysadmin/blog/delete?id='.$key->id_blog.'&foto='.$key->foto_blog.'&thumb='.$key->thumb_blog) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
 									</div>
 								</td>
 			                </tr>
-			                <!-- Modal Edit Data -->
-				            <div class="modal" id="modal-edit-<?= $key->id_kategori_blog ?>">
-								<div class="modal-dialog">
+			                <?php endforeach ?>
+	                	</tbody>
+              		</table>
+            	</div>
+            	<!-- /.card-body -->
+          	</div>
+          	<!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+<?php } ?>
+
+<?php if ($content == "nasabah") { ?>
+	<div class="row">
+        <div class="col-12">
+        	<div class="card">
+	            <div class="card-header">
+					<div class="btn-group pull-right">
+						<a href="#" tooltip class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i> Tambah</a>
+						<!-- <a href="#" tooltip class="btn btn-sm btn-info"><i class="fas fa-print"></i> Print</a>
+						<a href="#" tooltip class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a> -->
+					</div>
+	            </div>
+	            <!-- Modal Tambah Data -->
+	            <div class="modal" id="modal-default">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Tambah Data</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form method="post" action="<?= site_url('sysadmin/nasabah/create') ?>" role="form">
+									<div class="form-group">
+										<label>NIK</label>
+										<input type="text" name="nik_nasabah" required class="form-control" placeholder="NIK Nasabah">
+									</div>
+									<div class="form-group">
+										<label>Nama</label>
+										<input type="text" name="nama_nasabah" required class="form-control" placeholder="Nama Nasabah">
+									</div>
+									<div class="form-group">
+										<label>Jenis Kelamin</label>
+										<select class="form-control select2" name="jk_nasabah" style="width: 100%;">
+											<option value="L">Laki-laki</option>
+											<option value="P">Perempuan</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Tempat Lahir</label>
+										<input type="text" name="tempat_lahir_nasabah" required class="form-control" placeholder="Tempat Lahir Nasabah">
+									</div>
+									<div class="form-group">
+										<label>Tanggal Lahir</label>
+										<input type="text" name="tgl_lahir_nasabah" required class="form-control" placeholder="Tanggal Lahir Nasabah. Contoh : 30-06-1995">
+									</div>
+									<div class="form-group">
+										<label>Alamat</label>
+										<textarea class="form-control" name="alamat_nasabah" placeholder="Alamat Nasabah"></textarea>
+									</div>
+									<div class="form-group">
+										<label>No. Hp</label>
+										<input type="text" name="no_hp_nasabah" required class="form-control" placeholder="No. Hp Nasabah">
+									</div>
+									<div class="form-group">
+										<label>Password</label>
+										<input type="password" name="password_nasabah" required class="form-control" placeholder="Password akun Nasabah">
+									</div>
+									<div class="form-group">
+										<label>Status</label><br>
+										<input type="radio" checked value="1" name="status"> Aktif &nbsp;&nbsp;&nbsp;
+										<input type="radio" value="0" name="status"> Nonaktif
+									</div>
+							</div>
+							<div class="modal-footer justify-content-between">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+								<button type="submit" class="btn btn-primary">Simpan</button>
+								</form>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.Modal Tambah Data -->
+            	<!-- /.card-header -->
+            	<div class="card-body table-responsive">
+            		<table class="table datatable table-bordered table-hover">
+	                	<thead>
+			                <tr>
+								<th>No.</th>
+								<th>NIK</th>
+								<th>NAMA</th>
+								<th>L/P</th>
+								<th>TTL</th>
+								<th>ALAMAT</th>
+								<th>No. Hp</th>
+								<th>Status</th>
+								<th>Aksi</th>
+			                </tr>
+	                	</thead>
+	                	<tbody>
+			                <?php $no = 1; foreach ($data as $key): ?>
+			                <tr>
+								<td><?= $no++ ?></td>
+								<td><?= $key->nik_nasabah ?></td>
+								<td><?= $key->nama_nasabah ?></td>
+								<td><?= $key->jk_nasabah ?></td>
+								<td><?= $key->tempat_lahir_nasabah.", ".date_indo($key->tgl_lahir_nasabah) ?></td>
+								<td><?= $key->alamat_nasabah ?></td>
+								<td><?= $key->no_hp_nasabah ?></td>
+								<td>
+									<?php if ($key->status == 1){ ?>
+										<button class="btn btn-sm btn-success">Aktif</button>
+									<?php }else{ ?>
+										<button class="btn btn-sm btn-danger">Nonaktif</button>
+									<?php } ?>
+								</td>
+								<td>
+									<div class="btn-group pull-right">
+										<a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-<?= $key->id_nasabah ?>"><i class="fa fa-eye"></i></a>
+										<a href="<?= site_url('sysadmin/nasabah/transaksi/'.$key->id_nasabah) ?>" class="btn btn-sm btn-warning"><i class="fa fa-exchange-alt"></i></a>
+										<a href="<?= site_url('sysadmin/nasabah/delete/'.$key->id_nasabah) ?>" onclick="return confirm('Apakah anda yakin akan menghpaus data ini?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+									</div>
+								</td>
+			                </tr>
+			                <!-- Modal Tambah Data -->
+				            <div class="modal" id="modal-edit-<?= $key->id_nasabah ?>">
+								<div class="modal-dialog modal-md">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4 class="modal-title">Edit Data</h4>
@@ -1284,11 +1425,48 @@
 											</button>
 										</div>
 										<div class="modal-body">
-											<form method="POST" action="<?= site_url('sysadmin/kategori-blog/update') ?>" role="form">
+											<form method="post" action="<?= site_url('sysadmin/nasabah/update') ?>" role="form">
 												<div class="form-group">
-													<label>Nama Jenis Sampah</label>
-													<input type="text" value="<?= $key->kategori_blog ?>" class="form-control" name="kategori_blog" placeholder="Nama Jenis Sampah">
-													<input type="hidden" name="id_kategori_blog" value="<?= $key->id_kategori_blog ?>">
+													<label>NIK</label>
+													<input type="text" value="<?= $key->nik_nasabah ?>" name="nik_nasabah" required class="form-control" placeholder="NIK Nasabah">
+												</div>
+												<div class="form-group">
+													<label>Nama</label>
+													<input type="text" value="<?= $key->nama_nasabah ?>" name="nama_nasabah" required class="form-control" placeholder="Nama Nasabah">
+													<input type="hidden" name="id_nasabah" value="<?= $key->id_nasabah ?>">
+												</div>
+												<div class="form-group">
+													<label>Jenis Kelamin</label>
+													<select class="form-control select2" name="jk_nasabah" style="width: 100%;">
+														<option value="<?= $key->jk_nasabah == "L" ? "selected":"" ?>" value="L">Laki-laki</option>
+														<option value="<?= $key->jk_nasabah == "P" ? "selected":"" ?>" value="P">Perempuan</option>
+													</select>
+												</div>
+												<div class="form-group">
+													<label>Tempat Lahir</label>
+													<input type="text" value="<?= $key->tempat_lahir_nasabah ?>" name="tempat_lahir_nasabah" required class="form-control" placeholder="Tempat Lahir Nasabah">
+												</div>
+												<div class="form-group">
+													<label>Tanggal Lahir</label>
+													<input type="text" value="<?= $key->tgl_lahir_nasabah ?>" name="tgl_lahir_nasabah" required class="form-control" placeholder="Tanggal Lahir Nasabah. Contoh : 30-06-1995">
+												</div>
+												<div class="form-group">
+													<label>Alamat</label>
+													<textarea class="form-control" name="alamat_nasabah" placeholder="Alamat Nasabah"><?= $key->alamat_nasabah ?></textarea>
+												</div>
+												<div class="form-group">
+													<label>No. Hp</label>
+													<input type="text" value="<?= $key->no_hp_nasabah ?>" name="no_hp_nasabah" required class="form-control" placeholder="No. Hp Nasabah">
+												</div>
+												<div class="form-group">
+													<label>Password</label>
+													<input type="password" name="password_nasabah" class="form-control" placeholder="Password akun Nasabah">
+													<p style="color: blue; font-weight: bold;">Isi password jika ingin mengubah password</p>
+												</div>
+												<div class="form-group">
+													<label>Status</label><br>
+													<input type="radio" <?= $key->status == 1 ? "checked":"" ?> value="1" name="status"> Aktif &nbsp;&nbsp;&nbsp;
+													<input type="radio" <?= $key->status == 0 ? "checked":"" ?> value="0" name="status"> Nonaktif
 												</div>
 										</div>
 										<div class="modal-footer justify-content-between">
@@ -1301,7 +1479,7 @@
 								</div>
 								<!-- /.modal-dialog -->
 							</div>
-							<!-- /.Modal Edit Data -->
+							<!-- /.Modal Tambah Data -->
 			                <?php endforeach ?>
 	                	</tbody>
               		</table>

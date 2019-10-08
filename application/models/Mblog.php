@@ -8,14 +8,14 @@ class Mblog extends CI_Model {
 	}
 
 	public function read(){
-		$this->db->select('a.id_blog, a.judul_blog, a.isi_blog, a.foto_blog, a.publish, b.id_kategori_blog, b.kategori_blog, c.id_admin, c.nama_admin');
+		$this->db->select('a.id_blog, a.judul_blog, a.isi_blog, a.foto_blog, a.thumb_blog, a.publish, b.id_kategori_blog, b.kategori_blog, c.id_admin, c.nama_admin, a.created_at as tanggal');
 		$this->db->join('kategori_blog b', 'a.id_kategori_blog = b.id_kategori_blog');
 		$this->db->join('admin c', 'a.id_admin = c.id_admin');
 		return $this->db->get('blog a');
 	}
 
 	public function readById($id){
-		$this->db->select('a.id_blog, a.judul_blog, a.isi_blog, a.foto_blog, a.publish, b.id_kategori_blog, b.kategori_blog, c.id_admin, c.nama_admin');
+		$this->db->select('a.id_blog, a.judul_blog, a.isi_blog, a.foto_blog, a.thumb_blog, a.publish, b.id_kategori_blog, b.kategori_blog, c.id_admin, c.nama_admin, a.created_at as tanggal');
 		$this->db->join('kategori_blog b', 'a.id_kategori_blog = b.id_kategori_blog');
 		$this->db->join('admin c', 'a.id_admin = c.id_admin');
 		$this->db->where('a.id_blog', $id);

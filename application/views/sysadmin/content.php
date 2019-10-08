@@ -22,4 +22,8 @@
 	$this->load->view('sysadmin/tabel');
 }elseif ($content == "tambah-blog") {
 	$this->load->view('sysadmin/form');
+}elseif ($content == "edit-blog") {
+	$this->load->view('sysadmin/form');
+}elseif ($content == "nasabah") {
+	$this->load->view('sysadmin/tabel');
 }
